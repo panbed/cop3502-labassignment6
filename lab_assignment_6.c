@@ -5,33 +5,28 @@ int search(int numbers[], int low, int high, int value)
 {
 	if (numbers == NULL)
 		return -1;
-	
-	//printf("DEBUG: We are looking for %d...\n", value);
+	// create mid variable, which is ((high - low) / 2) + low
+	// (we need the "+ low" at the end because if not, then the low will just become 0
 	int mid = ((high - low) / 2) + low;
-	//printf("DEBUG: mid is (%d - %d) / 2 = %d with a value of %d\n", high, low, mid, numbers[mid]);
-	//printf("DEBUG: looking at numbers[%d]\n", mid);
-
-	if (low == high)
+	
+	if (low == high) // base case: if low is equal to high, then we didn't find a match, so return -1
 		return -1;
 	
-	if (numbers[mid] == value) {
-		//printf("DEBUG: We found %d at numbers[%d]!\n", value, mid);
+	// if the middle is equal to value, then we found the search index
+	// so return mid, which holds the index of the element
+	if (numbers[mid] == value)
 		return mid;
-	}
 	
-	if (numbers[mid] > value) {
-		//printf("DEBUG: numbers[%d] (%d) is greater than %d... calling search\n", mid, numbers[mid], value);
+	// if the value of mid is greater than the search value,
+	// then we recall the search function, now with 
+	// the highest index being equal to the mid - 1
+	else if (numbers[mid] > value)
 		return search(numbers, low, mid - 1, value);
-	}
 	
-	if (numbers[mid] < value) {
-		//printf("DEBUG: numbers[%d] (%d) is less than %d... calling search\n", mid, numbers[mid], value);
+	// on the other hand, if the value of mid is less than the value,
+	// we want to call search again, but this time replace the low with the index of mid
+	else if (numbers[mid] < value)
 		return search(numbers, mid + 1, high, value);
-	}
-
-	//printf("DEBUG: returning -1...\n");
-	return -1;
-	
 
 }
 
